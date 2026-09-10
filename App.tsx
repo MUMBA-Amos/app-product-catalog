@@ -1,12 +1,18 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { ProductListScreen } from './src/ui/screens/ProductListScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ProductDetailScreen } from './src/ui/screens/ProductDetailScreen';
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ProductListScreen />
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="List" component={ProductListScreen} />
+        <Stack.Screen name="Detail" component={ProductDetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+const Stack = createNativeStackNavigator();

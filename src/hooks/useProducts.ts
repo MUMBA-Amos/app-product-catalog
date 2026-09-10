@@ -36,9 +36,6 @@ export function useProducts(){
         .catch((err)=>{
             setState({ status: "error", message: err.message });
         })
-       
-
-        
 
 
     }
@@ -49,10 +46,7 @@ export function useProducts(){
       }
     }
 
-    useEffect(() => {
-    load(0,true);
-    }, []);
-
+   
 
 useEffect(() => {
   const timer = setTimeout(() => {

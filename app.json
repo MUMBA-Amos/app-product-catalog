@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "app-product-catalog",
+    "name": "Product Catalog",
     "slug": "app-product-catalog",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,9 +20,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-router"
-    ]
+    }
   }
 }
