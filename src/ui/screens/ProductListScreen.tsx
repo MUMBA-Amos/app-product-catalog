@@ -1,20 +1,22 @@
 import { useProducts } from "../../hooks/useProducts";
-import {
-    View,
-    Text,
-    FlatList,
-    TextInput,
-    Pressable,
-    Image,
-} from "react-native";
+import { View, Text, FlatList, TextInput, Pressable, Image, } from "react-native";
 
 export function ProductListScreen({ navigation }: any) {
-    const { state, loadMore, query, setQuery } = useProducts();
+    const { state, loadMore, query, setQuery, retry } = useProducts();
 
     function renderContent() {
         if (state.status === "loading") return <Text>Loading....</Text>;
-        if (state.status === "error") return <Text>{state.message}</Text>;
         if (state.status === "empty") return <Text>No products found</Text>;
+
+        if (state.status === "error") {
+            return (
+                <View style={{ padding: 24, alignItems: "center" }}>
+                <Text style={{ marginBottom: 12 }}>Couldn't load products. Check your connection.</Text>                    <Pressable onPress={retry} style={{ padding: 12, borderWidth: 1, borderRadius: 8 }}>
+                        <Text>Retry</Text>
+                    </Pressable>
+                </View>
+            );
+        }
 
         return (
             <FlatList

@@ -43,6 +43,12 @@ export function useProducts() {
     }
   }
 
+    function retry() {
+    setState({ status: "loading" });
+    setSkip(0);
+    load(0, true);
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (query === "") {
@@ -66,5 +72,5 @@ export function useProducts() {
     return () => clearTimeout(timer);
   }, [query]);
 
-  return { state, loadMore, query, setQuery };
+  return { state, loadMore, query, setQuery,retry };
 }
