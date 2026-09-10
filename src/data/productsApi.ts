@@ -34,7 +34,7 @@ export async function fetchProduct(id: number):Promise<ApiProduct>{
 }
 
 
-export async function searchProducts(query: number):Promise<ProductResponse>{
+export async function searchProducts(query: string):Promise<ProductResponse>{
     const response = await fetch(`${BASE_URL}/products/search?q=${query}`);
 
     if (!response.ok){

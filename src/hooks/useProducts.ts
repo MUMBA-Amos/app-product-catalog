@@ -1,4 +1,4 @@
-import { fetchProducts } from '../data/productsApi';
+import { fetchProducts,searchProducts } from '../data/productsApi';
 import { ProductResponse, ApiProduct } from '../data/types'
 import {useState, useEffect} from "react";
 
@@ -13,9 +13,9 @@ export function useProducts(){
     const [state, setState] = useState<ProductState>({status:"loading"});
     const [skip, setSkip]=useState(0);
     const [total, setTotal] = useState(0);
+    const [query, setQuery] = useState("");
 
-
-    function load(nextSkip: number){
+    function load(nextSkip: number, reset:boolean){
 
         fetchProducts(nextSkip)
           .then((response)=>{
@@ -24,7 +24,7 @@ export function useProducts(){
 
             //Now we are gonna set the prev
             setState((prev)=>{
-              if (prev.status ==="success"){
+              if (!reset && prev.status ==="success"){
                   return { status: "success", products: [...prev.products, ...response.products] };
               }
                 return { status: "success", products: response.products };
@@ -45,16 +45,40 @@ export function useProducts(){
 
     function loadMore() {
      if (skip < total) {
-    load(skip);
+    load(skip, false);
       }
     }
 
     useEffect(() => {
-    load(0);
+    load(0,true);
     }, []);
 
-    return {state, loadMore};
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    if (query === "") {
+      setSkip(0);
+      load(0,true);
+    } else {
+      searchProducts(query)
+        .then((response) => {
+          if (response.products.length === 0) {
+            setState({ status: "empty" });
+          } else {
+            setState({ status: "success", products: response.products });
+          }
+        })
+        .catch((err) => {
+          setState({ status: "error", message: err.message });
+        });
+    }
+  }, 400);
+
+  return () => clearTimeout(timer);
+}, [query]);
 
 
-    
+
+return { state, loadMore, query, setQuery };
+
 }
