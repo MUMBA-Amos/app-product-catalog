@@ -3,8 +3,7 @@ import {View, Text, FlatList} from "react-native";
 
 
 export function ProductListScreen(){
-    const {state} = useProducts();
-
+    const {state,loadMore} = useProducts();
 
     if (state.status ==="loading"){
         return <Text>Loading....</Text>;
@@ -25,6 +24,8 @@ export function ProductListScreen(){
         data={state.products}
         keyExtractor={(item)=> item.id.toString()}
         renderItem={({item})=><Text>{item.title}</Text>}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
         />
     )
 
