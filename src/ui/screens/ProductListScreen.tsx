@@ -11,12 +11,14 @@ export function ProductListScreen({ navigation }: any) {
         if (state.status === "error") {
             return (
                 <View style={{ padding: 24, alignItems: "center" }}>
-                <Text style={{ marginBottom: 12 }}>Couldn't load products. Check your connection.</Text>                    <Pressable onPress={retry} style={{ padding: 12, borderWidth: 1, borderRadius: 8 }}>
+                    <Text style={{ marginBottom: 12 }}>Couldn't load products. Check your connection.</Text>
+                    <Pressable onPress={retry} style={{ padding: 12, borderWidth: 1, borderRadius: 8 }}>
                         <Text>Retry</Text>
                     </Pressable>
                 </View>
             );
         }
+
 
         return (
             <FlatList

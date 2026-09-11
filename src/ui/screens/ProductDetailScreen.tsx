@@ -10,11 +10,23 @@ export function ProductDetailScreen({ route }: any) {
     }
 
     if (state.status === "error") {
-        return <Text>{state.message}</Text>;
+        return (
+            <View style={{ padding: 24, alignItems: "center" }}>
+                <Text style={{ marginBottom: 12 }}>
+                    Couldn't load this product. Check your connection.
+                </Text>
+            </View>
+        );
     }
 
     return (
         <ScrollView style={{ backgroundColor: "#FFD3BF" }}>
+
+            {state.product.images.length > 1 && (
+                <Text style={{ textAlign: "center", paddingTop: 12, fontSize: 12, color: "#666" }}>
+                    Swipe for more images
+                </Text>
+            )}
             <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
                 {state.product.images.map((uri) => (
                     <Image
